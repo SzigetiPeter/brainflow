@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 
-ANDROID_ABIS = ('arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64')
+ANDROID_ABIS = ('arm64-v8a',)
 DEFAULT_ANDROID_API_LEVEL = 'android-31'
 
 
@@ -113,6 +113,11 @@ def build_native(args, root, android_sdk_root):
             cmake_cmd.append('-DCMAKE_FIND_ROOT_PATH=%s' % args.cmake_find_root_path)
         for define in args.cmake_define:
             cmake_cmd.append('-D%s' % define)
+        
+        # Add Size optimization flags for smaller AAR
+        cmake_cmd.append('-DCMAKE_CXX_FLAGS_RELEASE=-Os -DNDEBUG')
+        cmake_cmd.append('-DCMAKE_C_FLAGS_RELEASE=-Os -DNDEBUG')
+        cmake_cmd.append('-DCMAKE_SHARED_LINKER_FLAGS_RELEASE=-Wl,-s')
 
         run_command(cmake_cmd, root)
         run_command(

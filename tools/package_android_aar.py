@@ -5,7 +5,7 @@ import zipfile
 from pathlib import Path
 
 
-ANDROID_ABIS = ('arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64')
+ANDROID_ABIS = ('arm64-v8a',)
 REQUIRED_NATIVE_LIBS = ('libBoardController.so', 'libsimpleble-c.so')
 
 
